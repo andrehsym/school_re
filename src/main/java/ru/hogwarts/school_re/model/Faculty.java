@@ -1,9 +1,14 @@
 package ru.hogwarts.school_re.model;
 
+import nonapi.io.github.classgraph.json.Id;
+
 import java.util.Objects;
 
+@Entity
 public class Faculty {
 
+    @Id
+    @GeneratedValue
     private long id;
     private String name;
     private String color;

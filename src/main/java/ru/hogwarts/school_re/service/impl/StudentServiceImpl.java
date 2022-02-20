@@ -2,6 +2,8 @@ package ru.hogwarts.school_re.service.impl;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school_re.model.Student;
+import ru.hogwarts.school_re.repository.FacultyRepository;
+import ru.hogwarts.school_re.repository.StudentRepository;
 import ru.hogwarts.school_re.service.StudentService;
 
 import javax.annotation.PostConstruct;
@@ -13,7 +15,12 @@ import java.util.Set;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-    Map<Long, Student> students = new HashMap<>();
+    private final StudentRepository studentRepository;
+
+    public StudentServiceImpl(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+//    Map<Long, Student> students = new HashMap<>();
     long countStudentId = 0;
 
     private Student createStudent(String name, int age) {

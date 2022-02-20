@@ -2,6 +2,7 @@ package ru.hogwarts.school_re.service.impl;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school_re.model.Faculty;
+import ru.hogwarts.school_re.repository.FacultyRepository;
 import ru.hogwarts.school_re.service.FacultyService;
 
 import javax.annotation.PostConstruct;
@@ -12,7 +13,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class FacultyServiceImpl implements FacultyService {
-    Map<Long, Faculty> faculties = new HashMap<>();
+
+    private final FacultyRepository facultyRepository;
+
+    public FacultyServiceImpl(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
+//    Map<Long, Faculty> faculties = new HashMap<>();
     long countFacultyId = 0;
 
     private Faculty createFaculty(String name, String color) {
