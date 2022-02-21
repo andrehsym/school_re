@@ -1,11 +1,11 @@
 package ru.hogwarts.school_re.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school_re.model.Faculty;
 import ru.hogwarts.school_re.service.FacultyService;
 
-import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -19,9 +19,8 @@ public class FacultyController {
     }
 
     @PostMapping
-    public ResponseEntity createFaculty(@RequestBody Faculty faculty) {
-        Faculty createFaculty = facultyService.createFaculty(faculty);
-        return ResponseEntity.ok(createFaculty);
+    public Faculty createFaculty(@RequestBody Faculty faculty) {
+        return facultyService.createFaculty(faculty);
     }
 
     @GetMapping("{id}")
@@ -35,12 +34,7 @@ public class FacultyController {
 
     @GetMapping("/all")
     public ResponseEntity getAllFacultyCollection() {
-        Map<Long, Faculty> getCollection = Map.copyOf(facultyService.getFacultyCollection());
-        if (getCollection == null) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(getCollection);
-//        return ResponseEntity.ok(studentService.getStudentCollection());
+        return ResponseEntity.ok(facultyService.getFacultyCollection());
     }
 
     @GetMapping("/color={color}")
@@ -55,6 +49,9 @@ public class FacultyController {
     @PutMapping()
     public ResponseEntity editFaculty(@RequestBody Faculty faculty) {
         Faculty editFaculty = facultyService.editFaculty(faculty);
+        if (editFaculty == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         return ResponseEntity.ok(editFaculty);
     }
 
@@ -64,6 +61,7 @@ public class FacultyController {
         if (getFaculty == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(facultyService.removeFaculty(id));
+        facultyService.removeFaculty(id);
+        return ResponseEntity.ok().build();
     }
 }

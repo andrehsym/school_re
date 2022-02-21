@@ -1,11 +1,11 @@
 package ru.hogwarts.school_re.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school_re.model.Student;
 import ru.hogwarts.school_re.service.StudentService;
 
-import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -19,9 +19,8 @@ public class StudentController {
     }
 
     @PostMapping
-    public ResponseEntity createStudent(@RequestBody Student student) {
-        Student createStudent = studentService.createStudent(student);
-        return ResponseEntity.ok(createStudent);
+    public Student createStudent(@RequestBody Student student) {
+        return studentService.createStudent(student);
     }
 
     @GetMapping("{id}")
@@ -35,15 +34,10 @@ public class StudentController {
 
     @GetMapping("/all")
     public ResponseEntity getAllStudentCollection() {
-        Map<Long, Student> getCollection = Map.copyOf(studentService.getStudentCollection());
-        if (getCollection.isEmpty()) {
-                return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(getCollection);
-//        return ResponseEntity.ok(studentService.getStudentCollection());
+        return ResponseEntity.ok(studentService.getStudentCollection());
     }
 
-    @GetMapping("/age={age}")
+    @GetMapping("/color={color}")
     public ResponseEntity filterStudentsByAge(@PathVariable int age) {
         Set<Student> filterStudentsByAge = Set.copyOf(studentService.filterStudentsByAge(age));
         if (filterStudentsByAge.isEmpty()) {
@@ -55,6 +49,9 @@ public class StudentController {
     @PutMapping()
     public ResponseEntity editStudent(@RequestBody Student student) {
         Student editStudent = studentService.editStudent(student);
+        if (editStudent == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         return ResponseEntity.ok(editStudent);
     }
 
@@ -64,6 +61,7 @@ public class StudentController {
         if (getStudent == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(studentService.removeStudent(id));
+        studentService.removeStudent(id);
+        return ResponseEntity.ok().build();
     }
 }
