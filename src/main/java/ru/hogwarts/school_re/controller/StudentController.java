@@ -37,7 +37,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentCollection());
     }
 
-    @GetMapping("/color={color}")
+    @GetMapping("/age={age}")
     public ResponseEntity filterStudentsByAge(@PathVariable int age) {
         Set<Student> filterStudentsByAge = Set.copyOf(studentService.filterStudentsByAge(age));
         if (filterStudentsByAge.isEmpty()) {
