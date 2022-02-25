@@ -1,12 +1,18 @@
 package ru.hogwarts.school_re.controller;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school_re.model.Student;
 import ru.hogwarts.school_re.service.StudentService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+
+import static org.hibernate.hql.internal.antlr.SqlTokenTypes.FROM;
+import static org.hibernate.loader.Loader.SELECT;
 
 @RestController
 @RequestMapping("/student")
@@ -39,11 +45,10 @@ public class StudentController {
 
     @GetMapping("/age={age}")
     public ResponseEntity filterStudentsByAge(@PathVariable int age) {
-        Set<Student> filterStudentsByAge = Set.copyOf(studentService.filterStudentsByAge(age));
-        if (filterStudentsByAge.isEmpty()) {
+        if (studentService.filterStudentsByAge(age).isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(filterStudentsByAge);
+        return ResponseEntity.ok(studentService.filterStudentsByAge(age));
     }
 
     @PutMapping()
@@ -63,5 +68,11 @@ public class StudentController {
         }
         studentService.removeStudent(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping()
+    public ResponseEntity filterStudentBetweenAge(@RequestParam(required = true) int min,
+                                                  @RequestParam(required = true) int max) {
+        return ResponseEntity.ok(studentService.findStudentsByAgeBetween(min, max));
     }
 }

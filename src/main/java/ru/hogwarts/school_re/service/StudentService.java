@@ -9,13 +9,15 @@ public interface StudentService {
 
     Student createStudent(Student student);
 
-    Student findStudent(long id);
+    Student findStudent(Long id);
 
     Collection<Student> getStudentCollection();
 
     Student editStudent(Student student);
 
-    void removeStudent(long id);
+    void removeStudent(Long id);
 
     Collection<Student> filterStudentsByAge(int age);
+
+    Collection<Student> findStudentsByAgeBetween(int min, int max);
 }

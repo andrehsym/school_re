@@ -22,7 +22,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override //GET
-    public Student findStudent(long id) {
+    public Student findStudent(Long id) {
         return studentRepository.findById(id).get();
     }
 
@@ -37,12 +37,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override //DELETE
-    public void removeStudent(long id) {
+    public void removeStudent(Long id) {
         studentRepository.deleteById(id);
     }
 
     @Override //GET
     public Collection<Student> filterStudentsByAge(int age) {
         return studentRepository.findByAge(age);
+    }
+
+    @Override //GET
+    public Collection<Student> findStudentsByAgeBetween(int min, int max) {
+        return studentRepository.findByAgeBetween(min, max);
     }
 }

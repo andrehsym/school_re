@@ -22,7 +22,7 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override //GET
-    public Faculty findFaculty(long id) {
+    public Faculty findFaculty(Long id) {
         return facultyRepository.findById(id).get();
     }
 
@@ -37,12 +37,17 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override //DELETE
-    public void removeFaculty(long id) {
+    public void removeFaculty(Long id) {
         facultyRepository.deleteById(id);
     }
 
     @Override //GET
     public Collection<Faculty> filterFacultiesByColor(String color) {
-        return facultyRepository.findByColor(color);
+        return facultyRepository.findByColorIgnoreCase(color);
+    }
+
+    @Override //GET
+    public Faculty findFacultyByName(String name) {
+        return facultyRepository.findByNameIgnoreCase(name);
     }
 }

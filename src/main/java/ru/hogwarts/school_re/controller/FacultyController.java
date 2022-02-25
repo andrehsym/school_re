@@ -23,27 +23,29 @@ public class FacultyController {
         return facultyService.createFaculty(faculty);
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity getFaculty(@PathVariable long id) {
-        Faculty getFaculty = facultyService.findFaculty(id);
-        if (getFaculty == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(getFaculty);
-    }
+//    @GetMapping("{id}")
+//    public ResponseEntity getFaculty(@PathVariable long id) {
+//        Faculty getFaculty = facultyService.findFaculty(id);
+//        if (getFaculty == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return ResponseEntity.ok(getFaculty);
+//    }
 
     @GetMapping("/all")
-    public ResponseEntity getAllFacultyCollection() {
+    public ResponseEntity getFacultyCollection(@RequestParam(required = false) String color) {
+        if (color!= null && !color.isBlank()) {
+            return ResponseEntity.ok(facultyService.filterFacultiesByColor(color));
+        }
         return ResponseEntity.ok(facultyService.getFacultyCollection());
     }
 
     @GetMapping("/color={color}")
     public ResponseEntity filterFacultiesByColor(@PathVariable String color) {
-        Set<Faculty> filterFacultiesByColor = Set.copyOf(facultyService.filterFacultiesByColor(color));
-        if (filterFacultiesByColor.isEmpty()) {
+        if (facultyService.filterFacultiesByColor(color).isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(filterFacultiesByColor);
+        return ResponseEntity.ok(facultyService.filterFacultiesByColor(color));
     }
 
     @PutMapping()
@@ -64,4 +66,14 @@ public class FacultyController {
         facultyService.removeFaculty(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping()
+    public ResponseEntity getFaculty(@RequestParam(required = false) Long id,
+                                     @RequestParam(required = false) String name) {
+        if (name!= null && !name.isBlank()) {
+            return ResponseEntity.ok(facultyService.findFacultyByName(name));
+        }
+        return ResponseEntity.ok(facultyService.findFaculty(id));
+    }
+
 }
