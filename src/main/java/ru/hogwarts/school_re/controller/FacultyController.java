@@ -23,15 +23,6 @@ public class FacultyController {
         return facultyService.createFaculty(faculty);
     }
 
-//    @GetMapping("{id}")
-//    public ResponseEntity getFaculty(@PathVariable long id) {
-//        Faculty getFaculty = facultyService.findFaculty(id);
-//        if (getFaculty == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(getFaculty);
-//    }
-
     @GetMapping("/all")
     public ResponseEntity getFacultyCollection(@RequestParam(required = false) String color) {
         if (color!= null && !color.isBlank()) {
