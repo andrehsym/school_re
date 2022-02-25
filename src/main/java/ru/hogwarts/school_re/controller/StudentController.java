@@ -1,18 +1,10 @@
 package ru.hogwarts.school_re.controller;
 
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school_re.model.Student;
 import ru.hogwarts.school_re.service.StudentService;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import static org.hibernate.hql.internal.antlr.SqlTokenTypes.FROM;
-import static org.hibernate.loader.Loader.SELECT;
 
 @RestController
 @RequestMapping("/student")
@@ -51,7 +43,7 @@ public class StudentController {
         return ResponseEntity.ok(studentService.filterStudentsByAge(age));
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity editStudent(@RequestBody Student student) {
         Student editStudent = studentService.editStudent(student);
         if (editStudent == null) {
@@ -70,7 +62,7 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity filterStudentBetweenAge(@RequestParam(required = true) int min,
                                                   @RequestParam(required = true) int max) {
         return ResponseEntity.ok(studentService.findStudentsByAgeBetween(min, max));

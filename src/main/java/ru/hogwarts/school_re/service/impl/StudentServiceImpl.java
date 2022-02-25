@@ -16,37 +16,37 @@ public class StudentServiceImpl implements StudentService {
         this.studentRepository = studentRepository;
     }
 
-    @Override //POST
+    @Override
     public Student createStudent(Student student) {
         return studentRepository.save(student);
     }
 
-    @Override //GET
+    @Override
     public Student findStudent(Long id) {
         return studentRepository.findById(id).get();
     }
 
-    @Override //GET
+    @Override
     public Collection<Student> getStudentCollection() { //get all students
         return studentRepository.findAll();
     }
 
-    @Override //PUT
+    @Override
     public Student editStudent(Student student) {
         return studentRepository.save(student);
     }
 
-    @Override //DELETE
+    @Override
     public void removeStudent(Long id) {
         studentRepository.deleteById(id);
     }
 
-    @Override //GET
+    @Override
     public Collection<Student> filterStudentsByAge(int age) {
         return studentRepository.findByAge(age);
     }
 
-    @Override //GET
+    @Override
     public Collection<Student> findStudentsByAgeBetween(int min, int max) {
         return studentRepository.findByAgeBetween(min, max);
     }

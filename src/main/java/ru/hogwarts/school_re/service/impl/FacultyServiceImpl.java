@@ -16,37 +16,37 @@ public class FacultyServiceImpl implements FacultyService {
         this.facultyRepository = facultyRepository;
     }
 
-    @Override //POST
+    @Override
     public Faculty createFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
 
-    @Override //GET
+    @Override
     public Faculty findFaculty(Long id) {
         return facultyRepository.findById(id).get();
     }
 
-    @Override //GET
+    @Override
     public Collection<Faculty> getFacultyCollection() { //get all students
         return facultyRepository.findAll();
     }
 
-    @Override //PUT
+    @Override
     public Faculty editFaculty(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
 
-    @Override //DELETE
+    @Override
     public void removeFaculty(Long id) {
         facultyRepository.deleteById(id);
     }
 
-    @Override //GET
+    @Override
     public Collection<Faculty> filterFacultiesByColor(String color) {
         return facultyRepository.findByColorIgnoreCase(color);
     }
 
-    @Override //GET
+    @Override
     public Faculty findFacultyByName(String name) {
         return facultyRepository.findByNameIgnoreCase(name);
     }

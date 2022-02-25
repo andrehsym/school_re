@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school_re.model.Faculty;
 import ru.hogwarts.school_re.service.FacultyService;
 
-import java.util.Set;
-
 @RestController
 @RequestMapping("/faculty")
 public class FacultyController {
@@ -39,7 +37,7 @@ public class FacultyController {
         return ResponseEntity.ok(facultyService.filterFacultiesByColor(color));
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity editFaculty(@RequestBody Faculty faculty) {
         Faculty editFaculty = facultyService.editFaculty(faculty);
         if (editFaculty == null) {
@@ -58,7 +56,7 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity getFaculty(@RequestParam(required = false) Long id,
                                      @RequestParam(required = false) String name) {
         if (name!= null && !name.isBlank()) {
