@@ -2,27 +2,18 @@ package ru.hogwarts.school_re.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import ru.hogwarts.school_re.controller.FacultyController;
-import ru.hogwarts.school_re.controller.StudentController;
 import ru.hogwarts.school_re.model.Faculty;
-import ru.hogwarts.school_re.model.Student;
 import ru.hogwarts.school_re.repository.FacultyRepository;
-import ru.hogwarts.school_re.service.FacultyService;
 import ru.hogwarts.school_re.service.impl.FacultyServiceImpl;
 
 import java.util.*;
@@ -48,15 +39,6 @@ class FacultyControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-    private Faculty faculty1;
-    private Faculty faculty2;
-    private Faculty faculty3;
-
-    private long id;
-    private long id1;
-    private long id2;
-    private long id3;
 
     @BeforeEach
     public void start() {
