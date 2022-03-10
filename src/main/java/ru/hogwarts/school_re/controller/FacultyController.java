@@ -23,13 +23,10 @@ public class FacultyController {
 
     @GetMapping("/all")
     public ResponseEntity getFacultyCollection(@RequestParam(required = false) String color) {
-        if (color!= null && !color.isBlank()) {
-            return ResponseEntity.ok(facultyService.filterFacultiesByColor(color));
-        }
         return ResponseEntity.ok(facultyService.getFacultyCollection());
     }
 
-    @GetMapping("/color={color}")
+    @GetMapping("{color}")
     public ResponseEntity filterFacultiesByColor(@PathVariable String color) {
         if (facultyService.filterFacultiesByColor(color).isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -47,7 +44,7 @@ public class FacultyController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity removeFaculty(@PathVariable long id) {
+    public ResponseEntity removeFaculty(@PathVariable Long id) {
         Faculty getFaculty = facultyService.findFaculty(id);
         if (getFaculty == null) {
             return ResponseEntity.notFound().build();
