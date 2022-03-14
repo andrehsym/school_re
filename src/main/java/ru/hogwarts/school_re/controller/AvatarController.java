@@ -15,6 +15,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.List;
 
 @RestController
 public class AvatarController {
@@ -43,6 +45,22 @@ public class AvatarController {
             is.transferTo(os);
         }
     }
+
+    @GetMapping("/all")
+    public ResponseEntity getAllAvatarCollection(@RequestParam("page") Integer pageNumber,
+                                                 @RequestParam("size") Integer pageSize) {
+        Collection<Avatar> avatars = avatarService.getAvatarCollection(pageNumber, pageSize);
+        return ResponseEntity.ok(avatars);
+    }
+
+//    @GetMapping(value = "/all-from-db")
+//    public ResponseEntity<byte[]> downloadAvatarCollection() {
+//        List<Avatar> avatars = List.copyOf(avatarService.getAllAvatars());
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
+//        headers.setContentLength(avatar.getData().length);
+//        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
+//    }
 
     @GetMapping(value = "/{id}/avatar-from-db")
     public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long id) {

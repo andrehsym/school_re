@@ -13,6 +13,12 @@ public interface StudentService {
 
     Collection<Student> getStudentCollection();
 
+    Integer getCountAllStudents();
+
+    Integer getAverageOfStudentsAge();
+
+    Collection<Student> getLast5StudentsSorted();
+
     Student editStudent(Student student);
 
     void removeStudent(Long id);

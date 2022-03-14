@@ -35,12 +35,26 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getStudentCollection());
     }
 
+    @GetMapping("/count-all")
+    public ResponseEntity getCountAllStudents() {
+        return ResponseEntity.ok("" + studentService.getCountAllStudents());
+    }
+    @GetMapping("/avg-age")
+    public ResponseEntity getAverageOfStudentsAge() {
+        return ResponseEntity.ok(studentService.getAverageOfStudentsAge());
+    }
+
     @GetMapping("/age={age}")
     public ResponseEntity filterStudentsByAge(@PathVariable int age) {
         if (studentService.filterStudentsByAge(age).isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(studentService.filterStudentsByAge(age));
+    }
+
+    @GetMapping("/last-students")
+    public ResponseEntity getLast5StudentsSorted() {
+        return ResponseEntity.ok(studentService.getLast5StudentsSorted());
     }
 
     @PutMapping
