@@ -1,0 +1,22 @@
+create table drivers_main (
+                              id real primary key,
+                              name text unique not null,
+                              age smallint check (age > 0),
+                              driver_license boolean
+);
+
+create table cars_main (
+                           id real primary key,
+                           brand text unique not null,
+                           model text unique not null
+);
+
+ALTER TABLE drivers_main ADD car_id real references cars_main(id);
+
+ALTER TABLE cars_main ADD driver_id real references drivers_main(id);
+
+create table cars_models (
+                             id real,
+                             model text primary key,
+                             cost numeric check (cost >= 0)
+)
