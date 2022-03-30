@@ -13,7 +13,7 @@ public class StudentController {
     private final StudentService studentService;
 
     public StudentController(StudentService studentService) {
-    this.studentService = studentService;
+        this.studentService = studentService;
     }
 
     @PostMapping
@@ -39,6 +39,7 @@ public class StudentController {
     public ResponseEntity getCountAllStudents() {
         return ResponseEntity.ok("" + studentService.getCountAllStudents());
     }
+
     @GetMapping("/avg-age")
     public ResponseEntity getAverageOfStudentsAge() {
         return ResponseEntity.ok(studentService.getAverageOfStudentsAge());
@@ -80,5 +81,15 @@ public class StudentController {
     public ResponseEntity filterStudentBetweenAge(@RequestParam(required = true) int min,
                                                   @RequestParam(required = true) int max) {
         return ResponseEntity.ok(studentService.findStudentsByAgeBetween(min, max));
+    }
+
+    @GetMapping("/getNamesWithChar")
+    public ResponseEntity getNamesWithChar(String filterChar) {
+        return ResponseEntity.ok(studentService.getNamesWithChar(filterChar));
+    }
+
+    @GetMapping("/averageAge")
+    public ResponseEntity getAverageStudentsAge() {
+        return ResponseEntity.ok(studentService.getAverageStudentsAge());
     }
 }

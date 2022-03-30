@@ -19,4 +19,8 @@ public interface FacultyService {
     Collection<Faculty> filterFacultiesByColor(String color);
 
     Faculty findFacultyByName(String name);
+
+    String longestFacultyName();
+
+    Integer mathTask();
 }
