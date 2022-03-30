@@ -1,5 +1,7 @@
 package ru.hogwarts.school_re.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 public class AvatarServiceImpl implements AvatarService {
 
     private final AvatarRepository avatarRepository;
+
+    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
 
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
@@ -52,6 +56,7 @@ public class AvatarServiceImpl implements AvatarService {
         avatar.setFileSize(avatarFile.getSize());
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
+        logger.info("Was invoked method for upload avatar");
         avatarRepository.save(avatar);
     }
     private String getExtensions(String fileName) {
@@ -60,12 +65,14 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findAvatar(Long id) {
+        logger.info("Was invoked method to find the avatar");
         return avatarRepository.findByStudentId(id).orElse(new Avatar());
     }
 
     @Override
     public Collection<Avatar> getAvatarCollection(Integer pageNumber, Integer pageSize) {
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+        logger.info("Was invoked method for collection of avatars");
         return avatarRepository.findAll(pageRequest).getContent();
     }
 }
