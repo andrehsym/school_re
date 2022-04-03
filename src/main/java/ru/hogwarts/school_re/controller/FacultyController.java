@@ -56,10 +56,19 @@ public class FacultyController {
     @GetMapping
     public ResponseEntity getFaculty(@RequestParam(required = false) Long id,
                                      @RequestParam(required = false) String name) {
-        if (name!= null && !name.isBlank()) {
+        if (name != null && !name.isBlank()) {
             return ResponseEntity.ok(facultyService.findFacultyByName(name));
         }
         return ResponseEntity.ok(facultyService.findFaculty(id));
     }
 
+    @GetMapping("/longestName")
+    public ResponseEntity longestFacultyName() {
+        return ResponseEntity.ok(facultyService.longestFacultyName());
+    }
+
+    @GetMapping("/mathTask")
+    public ResponseEntity mathTask() {
+        return ResponseEntity.ok(facultyService.mathTask());
+    }
 }

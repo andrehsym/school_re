@@ -8,13 +8,14 @@ import ru.hogwarts.school_re.repository.StudentRepository;
 import ru.hogwarts.school_re.service.StudentService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 
-    Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -81,4 +82,25 @@ public class StudentServiceImpl implements StudentService {
         logger.info("Was invoked method to find students in range of age");
         return studentRepository.findByAgeBetween(min, max);
     }
+
+    @Override
+    public List<String> getNamesWithChar(String filterChar) {
+        return studentRepository.findAll()
+                .parallelStream()
+                .map(Student::getName)
+                .sorted()
+                .map(i -> i.substring(0,1).toUpperCase()+i.substring(1))
+                .filter(i -> i.substring(0,1).equalsIgnoreCase(filterChar))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Double getAverageStudentsAge() {
+        return studentRepository.findAll()
+                .parallelStream()
+                .mapToInt(Student::getAge)
+                .average()
+                .getAsDouble();
+    }
+
 }

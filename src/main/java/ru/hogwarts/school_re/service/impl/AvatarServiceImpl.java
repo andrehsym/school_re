@@ -26,7 +26,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     private final AvatarRepository avatarRepository;
 
-    Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
 
     @Value("${path.to.avatars.folder}")
     private String avatarsDir;
@@ -38,7 +38,13 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Was invoked method to upload avatar for student {} ", studentId);
         Student student = studentRepository.getById(studentId);
+        if (student == null) {
+            String error = "Student was not found";
+            logger.error(error);
+            throw new IllegalArgumentException(error);
+        }
         Path filePath = Path.of(avatarsDir, student + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
@@ -56,7 +62,6 @@ public class AvatarServiceImpl implements AvatarService {
         avatar.setFileSize(avatarFile.getSize());
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
-        logger.info("Was invoked method for upload avatar");
         avatarRepository.save(avatar);
     }
     private String getExtensions(String fileName) {
@@ -65,7 +70,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findAvatar(Long id) {
-        logger.info("Was invoked method to find the avatar");
+        logger.info("Was invoked method to find avatar for student with id {}", id);
         return avatarRepository.findByStudentId(id).orElse(new Avatar());
     }
 
