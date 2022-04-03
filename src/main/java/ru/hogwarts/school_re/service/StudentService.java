@@ -28,9 +28,11 @@ public interface StudentService {
 
     Collection<Student> findStudentsByAgeBetween(int min, int max);
 
-//    List<String> getNamesWithA();
-
     List<String> getNamesWithChar(String filterChar);
 
     Double getAverageStudentsAge();
+
+    void threadTest1();
+
+    void threadTest2();
 }

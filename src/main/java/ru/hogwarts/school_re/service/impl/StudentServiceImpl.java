@@ -103,4 +103,112 @@ public class StudentServiceImpl implements StudentService {
                 .getAsDouble();
     }
 
+    @Override
+    public void threadTest1() {
+        List<String> names = studentRepository.getStudentsNames();
+
+        Thread thread1 = new Thread(() -> {
+            System.out.println(names.get(3));
+            System.out.println(names.get(4));
+            System.out.println(names.get(5));
+        });
+        thread1.start();
+        Thread thread2 = new Thread(() -> {
+            System.out.println(names.get(6));
+            System.out.println(names.get(7));
+            System.out.println(names.get(8));
+            System.out.println(names.get(9));
+        });
+        thread2.start();
+        System.out.println(names.get(0));
+        System.out.println(names.get(1));
+        System.out.println(names.get(2));
+
+            //вариант 2
+//        stNames(6L);
+//        stNames(7L);
+//        stNames(5L);
+//        Thread thread1 = new Thread(() -> {
+//            stNames(9L);
+//            stNames(10L);
+//            stNames(11L);
+//        });
+//        Thread thread2 = new Thread(() -> {
+//            stNames(8L);
+//            stNames(118L);
+//            stNames(119L);
+//            stNames(120L);
+//        });
+//        thread1.start();
+//        thread2.start();
+//        System.out.println(names.get(0));
+//        System.out.println(names.get(1));
+//        System.out.println(names.get(2));
+
+        //вариант 3
+//        Thread thread1 = new Thread(() -> {
+//            System.out.println(studentRepository.getById(9L).getName());
+//            System.out.println(studentRepository.getById(10L).getName());
+//            System.out.println(studentRepository.getById(11L).getName());
+//        });
+//        Thread thread2 = new Thread(() -> {
+//            System.out.println(studentRepository.getById(8L).getName());
+//            System.out.println(studentRepository.getById(118L).getName());
+//            System.out.println(studentRepository.getById(119L).getName());
+//            System.out.println(studentRepository.getById(120L).getName());
+//        });
+//        thread1.start();
+//        thread2.start();
+//        System.out.println(studentRepository.getById(6L).getName());
+//        System.out.println(studentRepository.getById(7L).getName());
+//        System.out.println(studentRepository.getById(5L).getName());
+
+    }
+
+    @Override
+    public void threadTest2() {
+        Thread thread1 = new Thread(() -> {
+            synchNames(9L);
+            synchNames(10L);
+            synchNames(11L);
+        });
+        Thread thread2 = new Thread(() -> {
+            synchNames(8L);
+            synchNames(118L);
+            synchNames(119L);
+            synchNames(120L);
+        });
+        thread1.start();
+        thread2.start();
+        synchNames(6L);
+        synchNames(7L);
+        synchNames(5L);
+
+//        Thread thread1 = new Thread(() -> {
+//            synchNames(3);
+//            synchNames(4);
+//            synchNames(5);
+//        });
+//        Thread thread2 = new Thread(() -> {
+//            synchNames(6);
+//            synchNames(7);
+//            synchNames(8);
+//            synchNames(9);
+//        });
+//        thread1.start();
+//        thread2.start();
+//        synchNames(0);
+//        synchNames(1);
+//        synchNames(2);
+    }
+
+    private synchronized void synchNames(Long /*Integer*/ id) {
+//        String name = studentRepository.getStudentsNames().get(id);
+        String name = studentRepository.getById(id).getName();
+        System.out.print(name);
+    }
+
 }
+
+
+
