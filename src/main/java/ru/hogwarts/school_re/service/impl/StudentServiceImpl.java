@@ -104,109 +104,58 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void threadTest1() {
-        List<String> names = studentRepository.getStudentsNames();
+    public void getStudentsThreads() {
+        printStudent(6l);
+        printStudent(7l);
+        printStudent(5l);
+        printStudent(9l);
 
-        Thread thread1 = new Thread(() -> {
-            System.out.println(names.get(3));
-            System.out.println(names.get(4));
-            System.out.println(names.get(5));
-        });
-        thread1.start();
-        Thread thread2 = new Thread(() -> {
-            System.out.println(names.get(6));
-            System.out.println(names.get(7));
-            System.out.println(names.get(8));
-            System.out.println(names.get(9));
-        });
-        thread2.start();
-        System.out.println(names.get(0));
-        System.out.println(names.get(1));
-        System.out.println(names.get(2));
+        new Thread(() -> {
+            System.out.println(Thread.currentThread().getName() + " is created");
+            printStudent(10l);
+            printStudent(11l);
+            printStudent(8l);
+        }).start();
 
-            //вариант 2
-//        stNames(6L);
-//        stNames(7L);
-//        stNames(5L);
-//        Thread thread1 = new Thread(() -> {
-//            stNames(9L);
-//            stNames(10L);
-//            stNames(11L);
-//        });
-//        Thread thread2 = new Thread(() -> {
-//            stNames(8L);
-//            stNames(118L);
-//            stNames(119L);
-//            stNames(120L);
-//        });
-//        thread1.start();
-//        thread2.start();
-//        System.out.println(names.get(0));
-//        System.out.println(names.get(1));
-//        System.out.println(names.get(2));
-
-        //вариант 3
-//        Thread thread1 = new Thread(() -> {
-//            System.out.println(studentRepository.getById(9L).getName());
-//            System.out.println(studentRepository.getById(10L).getName());
-//            System.out.println(studentRepository.getById(11L).getName());
-//        });
-//        Thread thread2 = new Thread(() -> {
-//            System.out.println(studentRepository.getById(8L).getName());
-//            System.out.println(studentRepository.getById(118L).getName());
-//            System.out.println(studentRepository.getById(119L).getName());
-//            System.out.println(studentRepository.getById(120L).getName());
-//        });
-//        thread1.start();
-//        thread2.start();
-//        System.out.println(studentRepository.getById(6L).getName());
-//        System.out.println(studentRepository.getById(7L).getName());
-//        System.out.println(studentRepository.getById(5L).getName());
-
+        new Thread(() -> {
+            System.out.println(Thread.currentThread().getName() + " is created");
+            printStudent(118l);
+            printStudent(119l);
+            printStudent(120l);
+        }).start();
     }
 
     @Override
-    public void threadTest2() {
-        Thread thread1 = new Thread(() -> {
-            synchNames(9L);
-            synchNames(10L);
-            synchNames(11L);
-        });
-        Thread thread2 = new Thread(() -> {
-            synchNames(8L);
-            synchNames(118L);
-            synchNames(119L);
-            synchNames(120L);
-        });
-        thread1.start();
-        thread2.start();
-        synchNames(6L);
-        synchNames(7L);
-        synchNames(5L);
+    public void getStudentsSyncThreads() {
+        printStudentSync(6l);
+        printStudentSync(7l);
+        printStudentSync(5l);
+        printStudentSync(9l);
 
-//        Thread thread1 = new Thread(() -> {
-//            synchNames(3);
-//            synchNames(4);
-//            synchNames(5);
-//        });
-//        Thread thread2 = new Thread(() -> {
-//            synchNames(6);
-//            synchNames(7);
-//            synchNames(8);
-//            synchNames(9);
-//        });
-//        thread1.start();
-//        thread2.start();
-//        synchNames(0);
-//        synchNames(1);
-//        synchNames(2);
+        new Thread(() -> {
+            System.out.println("Synchronized " + Thread.currentThread().getName() + " is created");
+            printStudentSync(10l);
+            printStudentSync(11l);
+            printStudentSync(8l);
+        }).start();
+
+        new Thread(() -> {
+            System.out.println("Synchronized " + Thread.currentThread().getName() + " is created");
+            printStudentSync(118l);
+            printStudentSync(119l);
+            printStudentSync(120l);
+        }).start();
     }
 
-    private synchronized void synchNames(Long /*Integer*/ id) {
-//        String name = studentRepository.getStudentsNames().get(id);
-        String name = studentRepository.getById(id).getName();
-        System.out.print(name);
+    public void printStudent(Long id) {
+        System.out.println(studentRepository.getById(id));
     }
+
+    public synchronized void printStudentSync(Long id) {
+        System.out.println(studentRepository.getById(id));
+    }
+
+
 
 }
 

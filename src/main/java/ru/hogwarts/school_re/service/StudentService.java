@@ -32,7 +32,11 @@ public interface StudentService {
 
     Double getAverageStudentsAge();
 
-    void threadTest1();
+//    void threadTest1();
 
-    void threadTest2();
+//    void threadTest2();
+
+    void getStudentsThreads();
+
+    void getStudentsSyncThreads();
 }
