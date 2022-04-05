@@ -105,56 +105,52 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void getStudentsThreads() {
-        printStudent(6l);
-        printStudent(7l);
-        printStudent(5l);
-        printStudent(9l);
-
+        getNames(6L);
+        getNames(7L);
+        getNames(5L);
         new Thread(() -> {
-            System.out.println(Thread.currentThread().getName() + " is created");
-            printStudent(10l);
-            printStudent(11l);
-            printStudent(8l);
+                        System.out.println("Thread 1 is created");
+            getNames(9L);
+            getNames(10L);
+            getNames(11L);
         }).start();
-
         new Thread(() -> {
-            System.out.println(Thread.currentThread().getName() + " is created");
-            printStudent(118l);
-            printStudent(119l);
-            printStudent(120l);
+                        System.out.println("Thread 2 is created");
+            getNames(8L);
+            getNames(118L);
+            getNames(119L);
+            getNames(120L);
+
         }).start();
     }
 
     @Override
     public void getStudentsSyncThreads() {
-        printStudentSync(6l);
-        printStudentSync(7l);
-        printStudentSync(5l);
-        printStudentSync(9l);
-
+        getSyncNames(6L);
+        getSyncNames(7L);
+        getSyncNames(5L);
         new Thread(() -> {
-            System.out.println("Synchronized " + Thread.currentThread().getName() + " is created");
-            printStudentSync(10l);
-            printStudentSync(11l);
-            printStudentSync(8l);
+            System.out.println("SyncThread 1 is created");
+            getSyncNames(9L);
+            getSyncNames(10L);
+            getSyncNames(11L);
         }).start();
-
         new Thread(() -> {
-            System.out.println("Synchronized " + Thread.currentThread().getName() + " is created");
-            printStudentSync(118l);
-            printStudentSync(119l);
-            printStudentSync(120l);
+            System.out.println("SyncThread 2 is created");
+            getSyncNames(8L);
+            getSyncNames(118L);
+            getSyncNames(119L);
+            getSyncNames(120L);
         }).start();
     }
 
-    public void printStudent(Long id) {
-        System.out.println(studentRepository.getById(id));
+    private void getNames(Long id) {
+        System.out.println(studentRepository.getById(id).getName());
     }
 
-    public synchronized void printStudentSync(Long id) {
-        System.out.println(studentRepository.getById(id));
+    private synchronized void getSyncNames(Long id) {
+        System.out.println(studentRepository.getById(id).getName());
     }
-
 
 
 }
