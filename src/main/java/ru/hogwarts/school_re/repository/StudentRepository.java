@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.hogwarts.school_re.model.Student;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
@@ -18,6 +19,9 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query(value= "SELECT * FROM student ORDER BY id OFFSET 2", nativeQuery = true)
     Collection<Student> getLast5StudentsSorted();
+
+    @Query(value="SELECT name FROM student", nativeQuery = true)
+    List<String> getStudentsNames();
 
     Collection<Student> findByAge(int age);
 

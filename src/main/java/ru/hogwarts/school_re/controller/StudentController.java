@@ -92,4 +92,14 @@ public class StudentController {
     public ResponseEntity getAverageStudentsAge() {
         return ResponseEntity.ok(studentService.getAverageStudentsAge());
     }
+
+    @GetMapping("/studentThreads")
+    public void threadTest1() {
+        studentService.getStudentsThreads();
+    }
+
+    @GetMapping("/syncStudentThreads")
+    public void threadTest2() {
+        studentService.getStudentsSyncThreads();
+    }
 }

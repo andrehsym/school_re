@@ -103,4 +103,57 @@ public class StudentServiceImpl implements StudentService {
                 .getAsDouble();
     }
 
+    @Override
+    public void getStudentsThreads() {
+        getNames(6L);
+        getNames(7L);
+        getNames(5L);
+        new Thread(() -> {
+                        System.out.println("Thread 1 is created");
+            getNames(9L);
+            getNames(10L);
+            getNames(11L);
+        }).start();
+        new Thread(() -> {
+                        System.out.println("Thread 2 is created");
+            getNames(8L);
+            getNames(118L);
+            getNames(119L);
+            getNames(120L);
+
+        }).start();
+    }
+
+    @Override
+    public void getStudentsSyncThreads() {
+        getSyncNames(6L);
+        getSyncNames(7L);
+        getSyncNames(5L);
+        new Thread(() -> {
+            System.out.println("SyncThread 1 is created");
+            getSyncNames(9L);
+            getSyncNames(10L);
+            getSyncNames(11L);
+        }).start();
+        new Thread(() -> {
+            System.out.println("SyncThread 2 is created");
+            getSyncNames(8L);
+            getSyncNames(118L);
+            getSyncNames(119L);
+            getSyncNames(120L);
+        }).start();
+    }
+
+    private void getNames(Long id) {
+        System.out.println(studentRepository.getById(id).getName());
+    }
+
+    private synchronized void getSyncNames(Long id) {
+        System.out.println(studentRepository.getById(id).getName());
+    }
+
+
 }
+
+
+
